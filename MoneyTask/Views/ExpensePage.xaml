@@ -1,37 +1,89 @@
 ﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MoneyTask.Views.ExpensePage"
              Title="{Binding Title}"
              xmlns:local="clr-namespace:MoneyTask.ViewModels"  
              xmlns:model="clr-namespace:MoneyTask.Models"  
-             x:Name="ExpensesPage">
+             x:Name="ExpensesPage"
+             Background="#202020">
 
     <ContentPage.BindingContext>
         <local:ExpensesViewModel />
     </ContentPage.BindingContext>
 
-    <RefreshView x:DataType="local:ExpensesViewModel" Command="{Binding LoadExpensesCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-        <CollectionView x:Name="ExpensesListView"
-                ItemsSource="{Binding Expenses}"
-                SelectionMode="None">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <StackLayout Padding="10" x:DataType="model:Expense">
-                        <Label Text="{Binding Description}" 
-                            LineBreakMode="NoWrap" 
-                            Style="{DynamicResource ListItemTextStyle}" 
-                            FontSize="16" />
-                        <Label Text="{Binding Amount}" 
-                            LineBreakMode="NoWrap"
-                            Style="{DynamicResource ListItemDetailTextStyle}"
-                            FontSize="13" />
-                    </StackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </RefreshView>
+
+    <AbsoluteLayout>
+
+
+        <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+            <RefreshView x:DataType="local:ExpensesViewModel" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+                <CollectionView x:Name="ExpensesListView"
+                        ItemsSource="{Binding Expenses}"
+                        SelectionMode="None"
+                        Margin="15, 0, 15, 0">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Margin="0,10,0,10" Padding="0" CornerRadius="15" HasShadow="False" BackgroundColor="Transparent">
+                                <Frame Margin="10" Padding="6" CornerRadius="15"  HasShadow="False" Background="#363636">
+                                    <StackLayout Orientation="Horizontal" Spacing="7">
+                                        <Frame WidthRequest="50" HeightRequest="50" Padding="20" CornerRadius="10" BackgroundColor="Transparent" HasShadow="False">
+                                            <Image Source="food.png"/>
+                                        </Frame>
+                                        <StackLayout Padding="5" Spacing="8">
+                                            <Label Text="{Binding Description}" 
+                                                   MaxLines="1"
+                                                   LineBreakMode="TailTruncation"
+                                                   FontSize="16"
+                                                   FontAttributes="Bold"
+                                                   VerticalOptions="Center" 
+                                                   HorizontalOptions="Start" 
+                                                   TextColor="#D3D3D3"/>
+                                            <Label Text="{Binding Amount, StringFormat='{}{0:0} zł'}"
+                                                   MaxLines="1"
+                                                   FontAttributes="Bold"
+                                                   LineBreakMode="TailTruncation"
+                                                   FontSize="18"
+                                                   VerticalOptions="Center" 
+                                                   HorizontalOptions="Start"
+                                                   TextColor="#D3D3D3"/>
+                                            <Label Text="{Binding ExpenseDate, StringFormat='{0:dd/MM/yyyy}'}" 
+                                                   LineBreakMode="NoWrap" 
+                                                   Style="{DynamicResource ListItemDetailTextStyle}" 
+                                                   FontSize="13"
+                                                   TextColor="#D3D3D3"/>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </Frame>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+        </StackLayout>
+
+
+        <Button Command="{Binding YourButtonCommand}" 
+            AbsoluteLayout.LayoutFlags="PositionProportional" 
+            AbsoluteLayout.LayoutBounds="0.5,0.9,AutoSize,AutoSize"
+            Margin="0,10,0,-50" 
+            CornerRadius="30" 
+            HeightRequest="40" 
+            WidthRequest="40" 
+            BackgroundColor="#3DA9DC">
+            <Button.ImageSource>
+                <FileImageSource File="plus.png"/>
+            </Button.ImageSource>
+        </Button>
+    </AbsoluteLayout>
+
+
+
+
+
+
+
+
 
 </ContentPage>
-
-
 

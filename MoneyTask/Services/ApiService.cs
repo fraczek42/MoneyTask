@@ -15,8 +15,7 @@ namespace MoneyTask.Services
         public ApiService()
         {
             string baseUrl = (string)Application.Current.Resources["apiBaseUrl"];
-            _client = new HttpClient { BaseAddress = new Uri(baseUrl) };
-            Console.WriteLine("TEST");
+            _client = new HttpClient(new UnsafeHttpClientHandler()) { BaseAddress = new Uri(baseUrl) };
         }
 
         public async Task<T> GetAsync<T>(string route)
