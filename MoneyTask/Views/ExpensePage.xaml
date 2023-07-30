@@ -1,0 +1,37 @@
+﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MoneyTask.Views.ExpensePage"
+             Title="{Binding Title}"
+             xmlns:local="clr-namespace:MoneyTask.ViewModels"  
+             xmlns:model="clr-namespace:MoneyTask.Models"  
+             x:Name="ExpensesPage">
+
+    <ContentPage.BindingContext>
+        <local:ExpensesViewModel />
+    </ContentPage.BindingContext>
+
+    <RefreshView x:DataType="local:ExpensesViewModel" Command="{Binding LoadExpensesCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <CollectionView x:Name="ExpensesListView"
+                ItemsSource="{Binding Expenses}"
+                SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Padding="10" x:DataType="model:Expense">
+                        <Label Text="{Binding Description}" 
+                            LineBreakMode="NoWrap" 
+                            Style="{DynamicResource ListItemTextStyle}" 
+                            FontSize="16" />
+                        <Label Text="{Binding Amount}" 
+                            LineBreakMode="NoWrap"
+                            Style="{DynamicResource ListItemDetailTextStyle}"
+                            FontSize="13" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
+
+</ContentPage>
+
+
+
